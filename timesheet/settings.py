@@ -56,7 +56,12 @@ ROOT_URLCONF = 'timesheet.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['schedule/templates', 'activity/templates', 'agent/templates', 'statch/templates'],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'schedule/templates' ),
+            os.path.join(BASE_DIR, 'activity/templates' ),
+            os.path.join(BASE_DIR, 'agent/templates' ),
+            os.path.join(BASE_DIR, 'statch/templates' )
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
