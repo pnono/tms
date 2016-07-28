@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+{% extends 'schedule/base.html' %}
+
+{% block content %}
+
+<script src='/static/js/angular-stat.js' type="text/javascript"></script>
+
+
+</head>
+
+
+<nav class="navbar navbar-default navbar-fixed-top">
+ <div class="container-fluid">
+  <div class="navbar-header">
+   <span class="navbar-brand">Planning</span>
+  </div>
+
+  <ul class="nav nav-tabs">
+   <li><a href="/schedule/planning">Planning</a></li>
+   <li><a href="/activity/edit">Activités</a></li>
+   <li class="active"><a href="/stat/">Charge</a></li>
+   <li><a href="/resource/index">Agent</a></li>
+  </ul>
+ </div>
+</nav>
+
+<body ng-controller="statController">
+
+<input type="hidden" id="year" name="variable" value={{ year }}>
+<input type="hidden" id="month" name="variable" value={{ month }}>
+
+
+<h1>
+ <button class="btn btn-default glyphicon " ng-click="doBackward()" type="button" >
+  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+ </button>
+ Charge du {{ month }} / {{ year }}
+ <button class="btn btn-default" ng-click="doForward()" type="button" value=">">
+  <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+ </button>
+</h1>
+<div class="container-fluid">
+ {% for week,value in data.iteritems %}
+ <div class="row">
+    <h2>Semaine {{ week }}</h2>
+        <div class="col-md-6">
+        <table class="table table-striped">
+            <tr>
+                <th>Activité</th>
+                <th>Jour.Homme</th>
+                <th>ETP</th>
+                <th>Agents</th>
+            </tr>
+            {% for actid,detail in value.iteritems %}
+            <tr>
+                <td>{{detail.actname}}</td>
+                <td>{{detail.actsum}}</td>
+                <td>{{detail.actetp}}</td>
+                <td>
+                    {% for a in detail.agent%}
+                    {{a}},
+                    {% empty %}
+                    aucun
+                    {%endfor%}
+
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+      </div>
+   </div>
+{% endfor %}
+ </div>
+
+
+</body>
+{% endblock content %}
