@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+{% extends 'schedule/base.html' %}
+
+{% block content %}
+
+<script src='/static/js/angular-activity.js' type="text/javascript"></script>
+
+
+</head>
+
+
+<nav class="navbar navbar-default navbar-fixed-top">
+ <div class="container-fluid">
+  <div class="navbar-header">
+   <span class="navbar-brand">Planning</span>
+  </div>
+
+  <ul class="nav nav-tabs">
+   <li><a href="/schedule/planning">Planning</a></li>
+   <li class="active"><a href="/activity/edit">Activités</a></li>
+   <li><a href="/stat/">Charge</a></li>
+   <li><a href="/resource/index">Agent</a></li>
+  </ul>
+ </div>
+</nav>
+
+<body ng-controller="activityController">
+
+<div class="container-fluid">
+ <div class="row">
+  <div class="col-md-2">
+   <button class="btn btn-primary" ng-click="doNewActivity()">Nouvelle activité</button>
+  </div>
+  <div class="col-md-3 ">
+    <div id="divanew" class="form-group" >
+     <input type="text" class="form-control"
+            data-toggle="tooltip" data-placement="bottom" title="Désignation de l'activité à ajouter"
+            placeholder="Désignation de la nouvelle activité" id="inputnew">
+    </div>
+   </div>
+  </div>
+
+ <div class="row">
+  <div class="col-md-3">
+   <div class="form-group">
+    <h2 for="actid">Activité</h2>
+    <select
+
+            size=15
+            class="form-control"
+            ng-model="data.act"
+            ng-options="option.fields.name for option in data.availableOptions"
+            data-toggle="tooltip" data-placement="bottom" title="Sélectionner une activité à modifier"
+    >
+    </select>
+   </div>
+  </div>
+
+  <div class="col-md-7 padtop">
+   <form class="form-horizontal" role="form">
+
+    <div class="row">
+     <div class="form-group" >
+      <label class="control-label col-sm-1">Identifiant:</label>
+      <label class="control-label col-sm-2">{[{data.act.pk}]}</label>
+     </div>
+    </div>
+
+    <div class="row">
+     <div class="form-group" >
+      <div class="col-md-2">
+       <label class="text-left control-label" for="inputrName">Désignation:</label>
+      </div>
+      <div class="col-md-6">
+       <input type="text"
+              class="form-control"
+              style="color:{[{data.act.fields.fcolor}]}; background-color:{[{data.act.fields.color}]}"
+              id="inputrName"
+              placeholder="Nom de l'activité"
+              ng-model="data.act.fields.name">
+      </div>
+     </div>
+    </div>
+
+
+    <div class="row">
+     <div class="form-group" >
+      <label class="text-left col-md-2">Activité active</label>
+      <div class="col-md-1">
+       <input type="checkbox"
+              class=""
+              ng-model='data.act.fields.active'>
+      </div>
+     </div>
+    </div>
+
+    <div class="row">
+     <div class="form-group" >
+      <label class="text-left col-md-3">Activité opérationnelle</label>
+      <div class="col-md-1">
+       <input type="checkbox"
+              class=""
+              ng-model='data.act.fields.ops'>
+      </div>
+     </div>
+    </div>
+
+    <div class="row">
+    <form class="form-horizontal" >
+     <div class="form-group">
+      <label class="col-md-3" for="inputColorName">Couleur de l'activité</label>
+      <div class="col-md-2">
+       <input type="color" id="inputColor" class="form-control"  ng-model="data.act.fields.color">
+      </div>
+       <label class="col-md-3" for="inputColorName">Couleur du texte</label>
+       <div class="col-md-2">
+       <input type="color" id="inputFColor" class="form-control" ng-model="data.act.fields.fcolor">
+      </div>
+     </div>
+    </form>
+    </div>
+
+    <div class="row">
+    <label class="col-md-3">Affichage : </label>
+    <label style="color:{[{data.act.fields.fcolor}]}; background-color:{[{data.act.fields.color}]}">{[{data.act.fields.name}]}</label>
+    </div>
+
+    <div class="row form-group">
+     <div class="col-md-2">
+      <button type="submit" class="form-control btn btn-primary" ng-click="doEditActivity()">Modifier</button>
+     </div>
+     <div class="col-md-2 col-md-offset-4">
+      <button class="form-control btn btn-default" ng-click="doDeleteActivity()">Supprimer</button>
+     </div>
+    </div>
+   </form>
+  </div>
+
+ </div>
+</div>
+
+</body>
+{% endblock content %}
