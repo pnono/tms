@@ -80,7 +80,7 @@ def get_appoint(request, year_str, minw_str, maxw_str):
     rlist = Resource.objects.filter(active=True)
 
     for res in rlist:
-        for week in range(minw,maxw):
+        for week in range(minw,maxw+1):
             w = Week(year, week)
             for i in range(0,6):
                 d = w.day(i)
@@ -121,6 +121,11 @@ def set_appoint(request, uid_str, day_str, month_str, year_str, ab_str, activity
     act = Activity.objects.filter(id=actid)
     if not act.exists():
         return HttpResponse("fail")
+    appoint = Appointment.objects.filter(date=datetime.datetime(year,month,day),start_hour=starth,last_hour=lasth,resource_id=uid)
+    if not appoint.exists():
+        print("delete previous appointment")
+        appoint.delete()
+
     print("Get activity")
     appoint = Appointment(date=datetime.datetime(year,month,day),start_hour=starth,last_hour=lasth)
     appoint.resource=res[0]
