@@ -235,7 +235,7 @@ scheduleApp
     var year = document.getElementById("year").value;
 
     var uri = '/schedule/planning/get/' + year + '/' + minw + '/' + maxw ;
-
+    $("#wait").show();
     $http.get(uri).then(
      function(response)
      {
@@ -247,6 +247,7 @@ scheduleApp
        item.bgColor = r[1];
        item.title = r[2];
       }
+      $("#wait").hide();
      });
     };
 
