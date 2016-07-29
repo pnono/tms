@@ -187,7 +187,7 @@ scheduleApp
    $( ".highlighted" ).each(
     function( index )
     {
-     $(this).toggleClass("highlighted");
+     var e = $(this).toggleClass("highlighted");
      var aurs= '/schedule/planning/set-' + $(this).attr("id");
      var uri = '/schedule/planning/status-' + $(this).attr("id");
      $http.get(uri).then(
@@ -200,14 +200,15 @@ scheduleApp
          function(response)
          {
           resp=response.data;
+          e.css("background-color", ''+activity.style.getPropertyValue("background-color"));
+          e.title = activity.value;
          }
         );
        }
       }
      );
 
-     $(this).css("background-color", ''+activity.style.getPropertyValue("background-color"));
-     $(this).title = activity.value;
+
      }
     );
    };
